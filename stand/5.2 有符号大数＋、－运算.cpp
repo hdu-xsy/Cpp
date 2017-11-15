@@ -1,3 +1,12 @@
+#include <iostream>
+using	namespace	std;
+
+class	CBigNumber;	//向前声明
+ostream &  operator << (ostream &os, const CBigNumber &rhs); //VC要求
+
+class	CUBigNumber; //向前声明
+ostream &  operator << (ostream &os, const CUBigNumber &rhs);  //VC要求
+//无符号大整数类，超过256位废弃
 class	CUBigNumber {
 friend class	CBigNumber;
 private :
@@ -24,6 +33,35 @@ private :
 	void _Multi10 ();//10倍
 	CUBigNumber _Divide (const CUBigNumber &rhs, CUBigNumber &remainder) const;//相除，结果分整数和余数部分
 	_Normalize (); //规整化表示, 去除多余0, 0用m_len为0表示(不用m_len为1,数据0表示, 有利于比较处理)
+};
+
+class	CBigNumber;	//向前声明
+ostream &  operator << (ostream &os, const CBigNumber &rhs); //VC要求
+
+class	CBigNumber {
+private :
+	CUBigNumber	m_bigValue;		//绝对值部分
+	bool	m_bPlus;			//有效位数
+public :
+	CBigNumber () {}			//无参构造,值不确定
+	CBigNumber (int	x);			//用常规小整数构造
+	CBigNumber (char *digitsA);	//用字符串构造
+	CBigNumber operator + (const CBigNumber &rhs) const;
+	CBigNumber operator - (const CBigNumber &rhs) const;
+	CBigNumber operator - () const;
+	CBigNumber operator * (const CBigNumber &rhs) const;
+	CBigNumber operator / (const CBigNumber &rhs) const;
+	CBigNumber operator % (const CBigNumber &rhs) const;
+	operator  int () const;
+	bool	operator > (const CBigNumber &rhs) const;
+	bool	operator < (const CBigNumber &rhs) const;
+	bool	operator == (const CBigNumber &rhs) const;
+	bool	operator != (const CBigNumber &rhs) const;
+	bool	operator >= (const CBigNumber &rhs) const;
+	bool	operator <= (const CBigNumber &rhs) const;
+	friend ostream &  operator << (ostream &os, const CBigNumber &rhs);
+private :
+	_Normalize (); //规整化表示, 绝对值和符号规整化，0时m_bPlus为true表示(有利于比较处理)
 };
 
 //规整化表示, 去除多余0, 0用m_len为0表示(不用m_len为1,数据0表示, 有利于比较处理)
@@ -295,51 +333,196 @@ ostream &  operator << (ostream &os, const CUBigNumber &rhs)
 }
 
 
+//规整化表示, 绝对值和符号规整化，0时m_bPlus为true表示(有利于比较处理)
+CBigNumber::_Normalize ()
+{
+	this->m_bigValue._Normalize ();
+	if (this->m_bigValue.m_len == 0)
+		m_bPlus = true;
+}
+
+CBigNumber::CBigNumber (int	x)
+{
+	if (x >= 0) {
+		m_bigValue = CUBigNumber (x);
+		m_bPlus = true;
+	} else {
+		m_bigValue = CUBigNumber (-x);
+		m_bPlus = false;
+	}
+}
+CBigNumber::CBigNumber (char *digitsA)
+{
+	if (digitsA [0] == '+') {
+		m_bigValue = CUBigNumber (digitsA+1);
+		m_bPlus = true;
+	} else if (digitsA [0] == '-') {
+		m_bigValue = CUBigNumber (digitsA+1);
+		m_bPlus = false;
+	} else {
+		m_bigValue = CUBigNumber (digitsA);
+		m_bPlus = true;
+	}
+	this->_Normalize ();
+}
+CBigNumber CBigNumber::operator + (const CBigNumber &rhs) const
+{
+	CBigNumber	result;
+	if (this->m_bPlus && rhs.m_bPlus) {
+		result.m_bigValue = this->m_bigValue + rhs.m_bigValue;
+		result.m_bPlus = true;
+	} else if (!this->m_bPlus && !rhs.m_bPlus) {
+		result.m_bigValue = this->m_bigValue + rhs.m_bigValue;
+		result.m_bPlus = false;
+	} else {
+		if (this->m_bigValue >= rhs.m_bigValue) {
+			result.m_bigValue = this->m_bigValue - rhs.m_bigValue;
+			result.m_bPlus = this->m_bPlus;
+		} else {
+			result.m_bigValue = rhs.m_bigValue - this->m_bigValue;
+			result.m_bPlus = !this->m_bPlus;
+		}
+	}
+
+	result._Normalize ();
+	return result;
+}
+
+CBigNumber CBigNumber::operator - () const
+{
+	CBigNumber result (*this);
+	result.m_bPlus = !result.m_bPlus;
+	result._Normalize ();
+	return result;
+}
+
+CBigNumber CBigNumber::operator - (const CBigNumber &rhs) const
+{
+	return *this + (-rhs);
+}
+
+CBigNumber CBigNumber::operator * (const CBigNumber &rhs) const
+{
+	CBigNumber result ;
+	result.m_bigValue = this->m_bigValue * rhs.m_bigValue;
+	result.m_bPlus = (this->m_bPlus && rhs.m_bPlus) || (!this->m_bPlus && !rhs.m_bPlus);
+	result._Normalize ();
+	return result;
+}
+CBigNumber CBigNumber::operator / (const CBigNumber &rhs) const
+{
+	CBigNumber result ;
+	result.m_bigValue = this->m_bigValue / rhs.m_bigValue;
+	result.m_bPlus = (this->m_bPlus && rhs.m_bPlus) || (!this->m_bPlus && !rhs.m_bPlus);
+	result._Normalize ();
+	return result;
+}
+
+CBigNumber CBigNumber::operator % (const CBigNumber &rhs) const
+{
+	CBigNumber result ;
+	result.m_bigValue = this->m_bigValue % rhs.m_bigValue;
+	result.m_bPlus = (this->m_bPlus && rhs.m_bPlus) || (!this->m_bPlus && !rhs.m_bPlus);
+	result._Normalize ();
+	return result;
+}
+
+//转换为常规小整数，高位废弃
+CBigNumber::operator int () const
+{
+	int	result;
+	result = (unsigned int) (this->m_bigValue);
+	if (!this->m_bPlus)
+		result = -result;
+	return result;
+}
+bool	CBigNumber::operator > (const CBigNumber &rhs) const
+{
+	if (this->m_bPlus && rhs.m_bPlus) {
+		//均为正数
+		return m_bigValue > rhs.m_bigValue;
+	}
+	if (!this->m_bPlus && !rhs.m_bPlus) {
+		//均为负数
+		return m_bigValue < rhs.m_bigValue;
+	}
+	//符号不同
+	return this->m_bPlus;
+}
+
+bool	CBigNumber::operator == (const CBigNumber &rhs) const
+{
+	return this->m_bPlus == rhs.m_bPlus && m_bigValue == rhs.m_bigValue;
+}
+
+bool	CBigNumber::operator != (const CBigNumber &rhs) const
+{
+	return !(*this == rhs);
+}
+
+bool	CBigNumber::operator < (const CBigNumber &rhs) const
+{
+	return !(*this >= rhs);
+}
+
+bool	CBigNumber::operator >= (const CBigNumber &rhs) const
+{
+	return (*this > rhs) || (*this == rhs);
+}
+bool	CBigNumber::operator <= (const CBigNumber &rhs) const
+{
+	return !(*this > rhs);
+}
+ostream &  operator << (ostream &os, const CBigNumber &rhs)
+{
+	if (!rhs.m_bPlus)
+		os << '-';
+	os << rhs.m_bigValue;
+	return os;
+}
+
+
 //测试演示程序
 int	main ()
 {
 	char	str [257];
 	cin >> str;
-	CUBigNumber	bigNumber1 (str);
+	CBigNumber	bigNumber1 (str);
 	cin >> str;
-	CUBigNumber	bigNumber2 (str);
+	CBigNumber	bigNumber2 (str);
 
-	CUBigNumber	bigNumber3;
+	CBigNumber	bigNumber3;
 	bigNumber3 = bigNumber1 + bigNumber2;
 	cout <<  bigNumber3 << endl;
 	bigNumber3 = bigNumber1 - bigNumber2;
 	cout <<  bigNumber3 << endl;
-	bigNumber3 = bigNumber1 * bigNumber2;
-	cout <<  bigNumber3 << endl;
 
+	return 0;
 }
 
 
 /*
 题目描述
 
-应用中需要解决大数运算问题。请设计无符号大数类，能支持大数+,-,*,比较运算和输出。假定本题大数在200位以内,输入数据均合法。
+应用中需要解决大数运算问题。请设计有符号大数类，能支持大数＋、－运算和输出。假定本题大数在200位以内。
 
 输入描述
 
-输入两行分别为两个无符号大数
-
-（第一个大数不小于第二个大数）
+输入两行分别为两个有符号大数
 
 输出描述
 
-它们的和  差  积
+输出它们的和、差（每个占1行）
 
 输入样例
 
-1245623652134651416536434754367564657876876876987
-1234689879657845768756
+-1234567890987654321333888999666
+ 147655765659657669789687967867
 
 输出样例
 
-1245623652134651416536434755602254537534722645743
-1245623652134651416536434753132874778219031108231
-1537958917153099098209725307498978420829044109097527114510873460018172
+-1086912125327996651544201031799
+-1382223656647311991123576967533
 
 
 
