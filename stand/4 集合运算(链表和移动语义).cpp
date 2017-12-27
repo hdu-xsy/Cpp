@@ -6,50 +6,50 @@ private:
 	struct Node{
 		int data;
 		Node *next;
-	} *m_pHead; // ¼¯ºÏ²ÉÓÃµÝÔöÅÅÐòµ¥Á´±í±íÊ¾
+	} *m_pHead; // é›†åˆé‡‡ç”¨é€’å¢žæŽ’åºå•é“¾è¡¨è¡¨ç¤º
 public:
-	//¹¹Ôìº¯Êý
+	//æž„é€ å‡½æ•°
 	CSet();
-	//Îö¹¹º¯Êý£¬ÊÍ·ÅÁ´±í
+	//æžæž„å‡½æ•°ï¼Œé‡Šæ”¾é“¾è¡¨
 	~CSet();
-	//Ôö¼ÓÔªËØ
+	//å¢žåŠ å…ƒç´ 
 	bool Add(int x);
-	//ÏÔÊ¾¼¯ºÏ
+	//æ˜¾ç¤ºé›†åˆ
 	void Display();
-	//½á¹ûÎªA¡¢B²¢¼¯
+	//ç»“æžœä¸ºAã€Bå¹¶é›†
 	CSet UnionBy(const CSet &rhs) const;
-	//½á¹ûÎªA¡¢B½»¼¯
+	//ç»“æžœä¸ºAã€Bäº¤é›†
 	CSet IntersectionBy(const CSet &rhs) const;
-	//½á¹ûÎªA¡¢B²î¼¯
+	//ç»“æžœä¸ºAã€Bå·®é›†
 	CSet DifferentBy(const CSet &rhs) const;
 
-	//ÏÂÁÐ³ÉÔ±º¯Êý±¾ÀýÎ´ÓÃ£¬´¿ÍêÕûÐÔ¿¼ÂÇ
-	//¿½±´¹¹Ôìº¯Êý
+	//ä¸‹åˆ—æˆå‘˜å‡½æ•°æœ¬ä¾‹æœªç”¨ï¼Œçº¯å®Œæ•´æ€§è€ƒè™‘
+	//æ‹·è´æž„é€ å‡½æ•°
 	CSet(const CSet &);
-	//ÒÆ¶¯¹¹Ôìº¯Êý
+	//ç§»åŠ¨æž„é€ å‡½æ•°
 	//CSet(CSet &&);
-	//É¾³ýÔªËØx
+	//åˆ é™¤å…ƒç´ x
 	bool Remove(int x);
-	//ÊÇ·ñ°üº¬ÔªËØx
+	//æ˜¯å¦åŒ…å«å…ƒç´ x
 	bool In(int x);
-	//¸´ÖÆ¸³Öµ
+	//å¤åˆ¶èµ‹å€¼
 	CSet & operator = (const CSet &rhs);
-	//ÒÆ¶¯¸³Öµ
+	//ç§»åŠ¨èµ‹å€¼
 	//CSet & operator = (CSet &&rhs);
 
 private:
-	//¼¯ºÏÇå¿Õ
+	//é›†åˆæ¸…ç©º
 	void	_Clear();
 };
 
 
-//¹¹Ôìº¯Êý
+//æž„é€ å‡½æ•°
 CSet::CSet()
 {
 	m_pHead = new Node;;
 	m_pHead->next = NULL;
 }
-//Îö¹¹º¯Êý£¬ÊÍ·ÅÁ´±í
+//æžæž„å‡½æ•°ï¼Œé‡Šæ”¾é“¾è¡¨
 CSet::~CSet()
 {
 	while (m_pHead) {
@@ -59,7 +59,7 @@ CSet::~CSet()
 	}
 }
 
-//¼¯ºÏÇå¿Õ
+//é›†åˆæ¸…ç©º
 void	CSet::_Clear()
 {
 	while (m_pHead->next) {
@@ -69,7 +69,7 @@ void	CSet::_Clear()
 	}
 }
 
-//Ôö¼ÓÔªËØ
+//å¢žåŠ å…ƒç´ 
 bool CSet::Add(int x)
 {
 	Node *p = m_pHead;
@@ -77,7 +77,7 @@ bool CSet::Add(int x)
 		p = p->next;
 	}
 	if (p->next && p->next->data == x)
-		return false; //ÔªËØÒÑÔÚ¼¯ºÏÖÐ
+		return false; //å…ƒç´ å·²åœ¨é›†åˆä¸­
 	Node *q = new Node;
 	q->data = x;
 	q->next = p->next;
@@ -86,7 +86,7 @@ bool CSet::Add(int x)
 
 }
 
-//ÏÔÊ¾¼¯ºÏ
+//æ˜¾ç¤ºé›†åˆ
 void CSet::Display()
 {
 	Node *p = m_pHead->next;
@@ -100,8 +100,8 @@ void CSet::Display()
 	cout << "}" << endl;
 }
 
-//½á¹ûÎªA¡¢B²¢¼¯£¬ÎªÐ§ÂÊ±ÜÃâ¿½±´¹¹Ôì
-//±¾ÀýÎª¼ò»¯Âß¼­Ö±½Óµ÷ÓÃAdd³ÉÔ±º¯Êý£¬Ð§ÂÊÎªO£¨M*N£©£»Êµ¼ÊÓ¦²Î¿¼IntersectionByÕ¹¿ª£¬Ð§ÂÊ¿ÉÎªO£¨M+N£©
+//ç»“æžœä¸ºAã€Bå¹¶é›†ï¼Œä¸ºæ•ˆçŽ‡é¿å…æ‹·è´æž„é€ 
+//æœ¬ä¾‹ä¸ºç®€åŒ–é€»è¾‘ç›´æŽ¥è°ƒç”¨Addæˆå‘˜å‡½æ•°ï¼Œæ•ˆçŽ‡ä¸ºOï¼ˆM*Nï¼‰ï¼›å®žé™…åº”å‚è€ƒIntersectionByå±•å¼€ï¼Œæ•ˆçŽ‡å¯ä¸ºOï¼ˆM+Nï¼‰
 CSet CSet::UnionBy(const CSet &rhs) const
 {
 	CSet  result;
@@ -134,7 +134,7 @@ CSet CSet::UnionBy(const CSet &rhs) const
 	return result;
 }
 
-//½á¹ûÎªA¡¢B½»¼¯£¬ÎªÐ§ÂÊ±ÜÃâ¿½±´¹¹Ôì
+//ç»“æžœä¸ºAã€Bäº¤é›†ï¼Œä¸ºæ•ˆçŽ‡é¿å…æ‹·è´æž„é€ 
 CSet CSet::IntersectionBy(const CSet &rhs) const
 {
 	CSet  result;
@@ -163,8 +163,8 @@ CSet CSet::IntersectionBy(const CSet &rhs) const
 	return result;
 }
 
-//½á¹ûÎªA¡¢B²î¼¯£¬ÎªÐ§ÂÊ±ÜÃâ¿½±´¹¹Ôì
-//±¾ÀýÎª¼ò»¯Âß¼­Ö±½Óµ÷ÓÃAdd³ÉÔ±º¯Êý£¬Ð§ÂÊÎªO£¨M*N£©£»Êµ¼ÊÓ¦²Î¿¼IntersectionByÕ¹¿ª£¬Ð§ÂÊ¿ÉÎªO£¨M+N£©
+//ç»“æžœä¸ºAã€Bå·®é›†ï¼Œä¸ºæ•ˆçŽ‡é¿å…æ‹·è´æž„é€ 
+//æœ¬ä¾‹ä¸ºç®€åŒ–é€»è¾‘ç›´æŽ¥è°ƒç”¨Addæˆå‘˜å‡½æ•°ï¼Œæ•ˆçŽ‡ä¸ºOï¼ˆM*Nï¼‰ï¼›å®žé™…åº”å‚è€ƒIntersectionByå±•å¼€ï¼Œæ•ˆçŽ‡å¯ä¸ºOï¼ˆM+Nï¼‰
 CSet CSet::DifferentBy(const CSet &rhs) const
 {
 	CSet  result;
@@ -190,7 +190,7 @@ CSet CSet::DifferentBy(const CSet &rhs) const
 	return result;
 }
 
-//É¾³ýÔªËØ
+//åˆ é™¤å…ƒç´ 
 bool CSet::Remove(int x)
 {
 	Node *p = m_pHead;
@@ -198,14 +198,14 @@ bool CSet::Remove(int x)
 		p = p->next;
 	}
 	if (p->next == NULL || p->next->data != x)
-		return false; //ÔªËØÎ´ÔÚ¼¯ºÏÖÐ
+		return false; //å…ƒç´ æœªåœ¨é›†åˆä¸­
 	Node *q = p->next;
 	p->next = q->next;
 	delete q;
 	return true;
 }
 
-//ÊÇ·ñ°üº¬ÔªËØx
+//æ˜¯å¦åŒ…å«å…ƒç´ x
 bool CSet::In(int x)
 {
 	Node *p = m_pHead;
@@ -217,56 +217,56 @@ bool CSet::In(int x)
 	return false;
 }
 
-//¿½±´¹¹Ôìº¯Êý
+//æ‹·è´æž„é€ å‡½æ•°
 CSet::CSet(const CSet &rhs)
 {
-	//¸´ÖÆÍ·½áµã
+	//å¤åˆ¶å¤´ç»“ç‚¹
 	m_pHead = new Node;
-	Node *last = m_pHead; //×îºó½áµã
+	Node *last = m_pHead; //æœ€åŽç»“ç‚¹
 
-	Node *p = rhs.m_pHead->next;//²»¿ÉÐÞ¸Ärhs.m_pHead£¬ ¹ÊÒýÈëÁÙÊ±±äÁ¿p
+	Node *p = rhs.m_pHead->next;//ä¸å¯ä¿®æ”¹rhs.m_pHeadï¼Œ æ•…å¼•å…¥ä¸´æ—¶å˜é‡p
 	while (p) {
-		Node *q = new Node;//ÉêÇëÒ»½áµã
-		q->data = p->data; //¸´ÖÆÔªËØ
-		//¹ÒÔÚ×îºó
+		Node *q = new Node;//ç”³è¯·ä¸€ç»“ç‚¹
+		q->data = p->data; //å¤åˆ¶å…ƒç´ 
+		//æŒ‚åœ¨æœ€åŽ
 		last->next = q;
 		last = q;
-		//ºóÒÆÒ»½áµã
+		//åŽç§»ä¸€ç»“ç‚¹
 		p = p->next;
 	}
 	last->next = NULL;
 }
-//ÒÆ¶¯¹¹Ôìº¯Êý
+//ç§»åŠ¨æž„é€ å‡½æ•°
 /*
 CSet::CSet(CSet &&rhs)
 {
-	//¸´ÖÆÍ·½áµã
+	//å¤åˆ¶å¤´ç»“ç‚¹
 	m_pHead = rhs.m_pHead;
 	rhs.m_pHead = NULL;
 }
 */
-//¸´ÖÆ¸³Öµ
+//å¤åˆ¶èµ‹å€¼
 CSet & CSet::operator = (const CSet &rhs)
 {
 	this->_Clear();
 
-	Node *last = m_pHead; //×îºó½áµã
+	Node *last = m_pHead; //æœ€åŽç»“ç‚¹
 
-	Node *p = rhs.m_pHead->next;//²»¿ÉÐÞ¸Ärhs.m_pHead£¬ ¹ÊÒýÈëÁÙÊ±±äÁ¿p
+	Node *p = rhs.m_pHead->next;//ä¸å¯ä¿®æ”¹rhs.m_pHeadï¼Œ æ•…å¼•å…¥ä¸´æ—¶å˜é‡p
 	while (p) {
-		Node *q = new Node;//ÉêÇëÒ»½áµã
-		q->data = p->data; //¸´ÖÆÔªËØ
-		//¹ÒÔÚ×îºó
+		Node *q = new Node;//ç”³è¯·ä¸€ç»“ç‚¹
+		q->data = p->data; //å¤åˆ¶å…ƒç´ 
+		//æŒ‚åœ¨æœ€åŽ
 		last->next = q;
 		last = q;
-		//ºóÒÆÒ»½áµã
+		//åŽç§»ä¸€ç»“ç‚¹
 		p = p->next;
 	}
 	last->next = NULL;
 
 	return *this;
 }
-//ÒÆ¶¯¸³Öµ
+//ç§»åŠ¨èµ‹å€¼
 /*
 CSet & CSet::operator = (CSet &&rhs)
 {
@@ -310,29 +310,29 @@ int main()
 }
 
 /*
-ÌâÄ¿ÃèÊö
+é¢˜ç›®æè¿°
 
-ÇëÉè¼ÆÊµÏÖ¼¯ºÏÀà£¬ÔªËØÀàÐÍÎªÕûÐÎ, ¼¯ºÏ²ÉÓÃ´øÍ·½áµãµ¥Á´±í±íÊ¾¡£¸Ã¼¯ºÏÀàÖ§³Ö¼¯ºÏÔªËØÔö¼Ó
-¡¢É¾³ý¡¢²éÑ¯£»²¢Ö§³Ö¼¯ºÏ²¢¡¢½»¡¢²îÔËËã£»ÀûÓÃÄãÉè¼ÆµÄ¼¯ºÏÀà£¬ÊµÏÖ±¾ÌâÒªÇó¡£³ÌÐòÓ¦ÌåÏÖÃæ
-Ïò¶ÔÏó³ÌÐòÉè¼ÆË¼Ïë£¬½á¹¹ºÏÀí¡£Îª±£Ö¤½á¹ûÎ¨Ò»£¬¼¯ºÏÔªËØµÝÔöÅÅÁÐ¡£ÈçÐèÓÃµ½¿½±´¹¹ÔìºÍ¸³Öµ
-Ó¦ÖØÔØ. ¿Õ¼äÓ¦ÕýÈ·ÊÍ·Å. ÒªÇóÊ¹ÓÃÒÆ¶¯¸´ÖÆºÍÒÆ¶¯¸³Öµ,µ«±¾Æ½Ì¨±àÒëÆ÷²»Ö§³Ö£¬ËùÒÔ£¬Õâ²¿·Ö
-´úÂëÒÔ×¢½âÐÎÊ½Ìá¹©.
+è¯·è®¾è®¡å®žçŽ°é›†åˆç±»ï¼Œå…ƒç´ ç±»åž‹ä¸ºæ•´å½¢, é›†åˆé‡‡ç”¨å¸¦å¤´ç»“ç‚¹å•é“¾è¡¨è¡¨ç¤ºã€‚è¯¥é›†åˆç±»æ”¯æŒé›†åˆå…ƒç´ å¢žåŠ 
+ã€åˆ é™¤ã€æŸ¥è¯¢ï¼›å¹¶æ”¯æŒé›†åˆå¹¶ã€äº¤ã€å·®è¿ç®—ï¼›åˆ©ç”¨ä½ è®¾è®¡çš„é›†åˆç±»ï¼Œå®žçŽ°æœ¬é¢˜è¦æ±‚ã€‚ç¨‹åºåº”ä½“çŽ°é¢
+å‘å¯¹è±¡ç¨‹åºè®¾è®¡æ€æƒ³ï¼Œç»“æž„åˆç†ã€‚ä¸ºä¿è¯ç»“æžœå”¯ä¸€ï¼Œé›†åˆå…ƒç´ é€’å¢žæŽ’åˆ—ã€‚å¦‚éœ€ç”¨åˆ°æ‹·è´æž„é€ å’Œèµ‹å€¼
+åº”é‡è½½. ç©ºé—´åº”æ­£ç¡®é‡Šæ”¾. è¦æ±‚ä½¿ç”¨ç§»åŠ¨å¤åˆ¶å’Œç§»åŠ¨èµ‹å€¼,ä½†æœ¬å¹³å°ç¼–è¯‘å™¨ä¸æ”¯æŒï¼Œæ‰€ä»¥ï¼Œè¿™éƒ¨åˆ†
+ä»£ç ä»¥æ³¨è§£å½¢å¼æä¾›.
 
-ÊäÈëÃèÊö
+è¾“å…¥æè¿°
 
-¿ªÊ¼ÎªÁ½¸öÕýÕûÊým,n£»ºóÐøm¸öÕûÊý¹¹³É¼¯ºÏA,ÔÙºóÐøn¸öÕûÊý¹¹³É¼¯ºÏB
+å¼€å§‹ä¸ºä¸¤ä¸ªæ­£æ•´æ•°m,nï¼›åŽç»­mä¸ªæ•´æ•°æž„æˆé›†åˆA,å†åŽç»­nä¸ªæ•´æ•°æž„æˆé›†åˆB
 
-Êä³öÃèÊö
+è¾“å‡ºæè¿°
 
-¼¯ºÏA¡¢BºÍËûÃÇµÄ²¢¡¢½»¡¢²î¼¯£»Ã¿¸ö¼¯ºÏÔªËØ¼äÒÔ,·Ö¸ô£»²»Í¬¼¯ºÏÏÔÊ¾ÔÚ²»Í¬ÐÐ
+é›†åˆAã€Bå’Œä»–ä»¬çš„å¹¶ã€äº¤ã€å·®é›†ï¼›æ¯ä¸ªé›†åˆå…ƒç´ é—´ä»¥,åˆ†éš”ï¼›ä¸åŒé›†åˆæ˜¾ç¤ºåœ¨ä¸åŒè¡Œ
 
-ÊäÈëÑùÀý
+è¾“å…¥æ ·ä¾‹
 
 3 5
 1 2 3
 3 5 8 2 1
 
-Êä³öÑùÀý
+è¾“å‡ºæ ·ä¾‹
 
 {1,2,3}
 {1,2,3,5,8}
