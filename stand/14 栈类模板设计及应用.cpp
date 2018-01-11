@@ -1,9 +1,11 @@
 #include <iostream>
+#include <string>
 using	namespace std;
 
+template <class T>
 class	CStack {
 	struct Node {
-		int	data;
+		T	data;
 		Node *next;
 	};
 private :
@@ -16,13 +18,14 @@ public :
 	CStack & operator =	(const CStack &rhs);//赋值运算符重载
 
 	~CStack	();				 //析构函数
-	void	push (int x);	 //入栈
+	void	push (const T & x);	 //入栈
 	bool	empty () const;  //判栈空
-	int		top () const;    //取栈顶元素
+	T&		top () const;    //取栈顶元素
 	void	pop ();			 //出栈
 };
 
-CStack::CStack	(const CStack &rhs) //拷贝构造函数
+template <class T>
+CStack<T>::CStack	(const CStack &rhs) //拷贝构造函数
 {
 	m_sp = NULL;
 	if (rhs.empty ()) //空栈？
@@ -46,7 +49,8 @@ CStack::CStack	(const CStack &rhs) //拷贝构造函数
 	last->next = NULL;	//最后结点指针置空
 }
 
-CStack & CStack::operator =	(const CStack &rhs)//赋值运算符重载
+template <class T>
+CStack<T> & CStack<T>::operator =	(const CStack<T> &rhs)//赋值运算符重载
 {
 	if (this == &rhs)
 		return *this;
@@ -75,7 +79,9 @@ CStack & CStack::operator =	(const CStack &rhs)//赋值运算符重载
 
 	return *this;
 }
-CStack::~CStack	()
+
+template <class T>
+CStack<T>::~CStack	()
 {
 	while (m_sp != NULL) {
 		Node *p = m_sp;
@@ -84,7 +90,8 @@ CStack::~CStack	()
 	}
 }
 
-void	CStack::push (int x)
+template <class T>
+void	CStack<T>::push (const T& x)
 {
 	Node *p = new Node;
 	p->data = x;
@@ -92,28 +99,38 @@ void	CStack::push (int x)
 	m_sp = p;
 }
 
-bool	CStack::empty () const
+template <class T>
+bool	CStack<T>::empty () const
 {
 	return (m_sp == NULL);
 }
-int		CStack::top () const
+
+template <class T>
+T&		CStack<T>::top () const
 {
 	return m_sp->data;
 }
 
-void	CStack::pop ()
+template <class T>
+void	CStack<T>::pop ()
 {
 	Node *p = m_sp;
 	m_sp = p->next;
 	delete p;
 }
 
-int main()
+template  <class T>
+void    Parse ()
 {
-	CStack	S1, S2;
-	int	v, x;
+	int	n;
+	cin >> n;
 
-	while (cin >> v >> x) {
+	CStack<T>	S1, S2;
+	int	   v, i;
+	T    x;
+
+    for (i = 0; i < n; i++) {
+        cin >> v >> x;
 		if (v == 1)
 			S1.push (x);
 		else
@@ -134,25 +151,42 @@ int main()
 		S2.pop ();
 	}
 	cout << endl;
-
-	return 0;
 }
 
+
+int	main ()
+{
+    string  strType;
+
+    while (cin >> strType) {
+        if (strType == "int")
+            Parse<int> ();
+        else if (strType == "string")
+            Parse<string> ();
+    }
+}
+
+
+
 /*
+栈类模板设计及应用
+
 题目描述
 
-模拟STL  stack类设计实现你的stack类，该类需具有入栈，出栈，判栈空，取栈顶元素等功能；利用该类实现本题要求。本题要求使用单链表实现。不可使用STL  stack类
+模拟STL stack类模板设计实现你的stack类模板，该类需具有入栈，出栈，判栈空，取栈顶元素等功能，并能拷贝构造和赋值；利用该类实现本题要求。不可使用STL  stack类，可使用STL string类。
 
 输入描述
 
-分别构造两个空栈，再读入若干对整数v、x; 1<=v<=2; 将元素x入第v个栈 。
+开始int或string代表需要处理的对象类型。对于每种类型，先构造两个目标类型的空栈，读入整数n,再读入n对整数v、x; 1<=v<=2; 将元素x入第v个栈,n对整数处理完成后， 将两个栈中元素出栈，并输出。
 
 输出描述
 
-最后将两个栈中元素出栈，并输出；每个栈中元素占一行，元素间以空格分隔。
+每个栈中元素占一行，元素间以空格分隔。
 
 输入样例
 
+int
+7
 1 100
 2 200
 1 300
@@ -161,43 +195,19 @@ int main()
 1 60
 2 80
 
+string
+6
+1   some
+1   one
+2   two
+2   tom
+1   cat
+2   hdu
+
 输出样例
 
 60 50 300 100
 80 400 200
-
-题目描述
-
-模拟STL  stack类设计实现你的stack类，该类需具有入栈，出栈，判栈空，取栈顶元素等功能；利用该类实现本题要求。本题要求使用单链表实现。不可使用STL  stack类
-
-输入描述
-
-分别构造两个空栈，再读入若干对整数v、x; 1<=v<=2; 将元素x入第v个栈 。
+cat one some
+hdu tom two
 */
-
-
-
-输出描述
-
-最后将两个栈中元素出栈，并输出；每个栈中元素占一行，元素间以空格分隔。
-
-
-
-
-输入样例
-
-1 100
-2 200
-1 300
-2 400
-1 50
-1 60
-2 80
-
-
-
-
-输出样例
-
-60 50 300 100
-80 400 200

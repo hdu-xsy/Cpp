@@ -111,35 +111,35 @@ int	main ()
 
 
 /*
-ÀàÄ£°åºÍÒì³£´¦Àí
+ç±»æ¨¡æ¿å’Œå¼‚å¸¸å¤„ç†
 
-ÌâÄ¿ÃèÊö
+é¢˜ç›®æè¿°
 
-²Î¿¼C++ vectorÀàÄ£°å£¬Éè¼ÆÊµÏÖ×Ô¼ºµÄCVectorÏòÁ¿ÀàÄ£°å£¬Íê³ÉÏÂÁÐ»ù±¾¹¦ÄÜ£º ¹¹Ôì¡¢Îö¹¹¡¢
-size¡¢push_backºÍÏÂ±ê·ÃÎÊ£¬ÔÚÍ¨¹ýÏÂ±ê·ÃÎÊÔ½½çÊ±Å×³öÒì³£¡£±àÐ´²âÊÔ³ÌÐò£¬ÀûÓÃ¸ÃÀàÄ£°åÍê
-³ÉÒ»¸ö½âÊÍÆ÷£¬Ëü½ÓÊÜÃüÁî£¬Ö´ÐÐÏàÓ¦²Ù×÷¡£
+å‚è€ƒC++ vectorç±»æ¨¡æ¿ï¼Œè®¾è®¡å®žçŽ°è‡ªå·±çš„CVectorå‘é‡ç±»æ¨¡æ¿ï¼Œå®Œæˆä¸‹åˆ—åŸºæœ¬åŠŸèƒ½ï¼š æž„é€ ã€æžæž„ã€
+sizeã€push_backå’Œä¸‹æ ‡è®¿é—®ï¼Œåœ¨é€šè¿‡ä¸‹æ ‡è®¿é—®è¶Šç•Œæ—¶æŠ›å‡ºå¼‚å¸¸ã€‚ç¼–å†™æµ‹è¯•ç¨‹åºï¼Œåˆ©ç”¨è¯¥ç±»æ¨¡æ¿å®Œ
+æˆä¸€ä¸ªè§£é‡Šå™¨ï¼Œå®ƒæŽ¥å—å‘½ä»¤ï¼Œæ‰§è¡Œç›¸åº”æ“ä½œã€‚
 
-ÊäÈëÃèÊö
+è¾“å…¥æè¿°
 
-ÊäÈëÃüÁîÓÐ5ÖÖ £ºint ÕûÊý  ´ú±í¿ªÊ¼½¨Á¢ÕûÊýÏòÁ¿ (ÕûÊýÎªÏòÁ¿³õÊ¼´óÐ¡)£»string ÕûÊý
-´ú±í¿ªÊ¼½¨Á¢stringÏòÁ¿£»push¶ÔÏó ´ú±íÔÚÏòÁ¿Î²×·¼Ó¶ÔÏó£» put  ÏÂ±ê  ¶ÔÏó  ´ú±íÐè½«¶ÔÏó
-·ÅÈëÏòÁ¿ÏÂ±ê´¦£»fetch  ÏÂ±ê   ´ú±íÈ¡²¢´òÓ¡ÏòÁ¿ÏÂ±ê´¦¶ÔÏó£»µ±ÏÂ±êÔ½½çÊ±Å×³öÒì³£²¢ÏÔÊ¾in
-valid index:ÏÂ±ê£»quit´ú±í±¾¶ÓÁÐ´¦Àí½áÊø¡£Ã¿¸ö¶ÓÁÐÒÔint»òstring¿ªÊ¼£¬ÒÔquit½áÊø£»ËùÓÐ
-ÃüÁî¾ùÐ¡Ð´¡£
+è¾“å…¥å‘½ä»¤æœ‰5ç§ ï¼šint æ•´æ•°  ä»£è¡¨å¼€å§‹å»ºç«‹æ•´æ•°å‘é‡ (æ•´æ•°ä¸ºå‘é‡åˆå§‹å¤§å°)ï¼›string æ•´æ•°
+ä»£è¡¨å¼€å§‹å»ºç«‹stringå‘é‡ï¼›pushå¯¹è±¡ ä»£è¡¨åœ¨å‘é‡å°¾è¿½åŠ å¯¹è±¡ï¼› put  ä¸‹æ ‡  å¯¹è±¡  ä»£è¡¨éœ€å°†å¯¹è±¡
+æ”¾å…¥å‘é‡ä¸‹æ ‡å¤„ï¼›fetch  ä¸‹æ ‡   ä»£è¡¨å–å¹¶æ‰“å°å‘é‡ä¸‹æ ‡å¤„å¯¹è±¡ï¼›å½“ä¸‹æ ‡è¶Šç•Œæ—¶æŠ›å‡ºå¼‚å¸¸å¹¶æ˜¾ç¤ºin
+valid index:ä¸‹æ ‡ï¼›quitä»£è¡¨æœ¬é˜Ÿåˆ—å¤„ç†ç»“æŸã€‚æ¯ä¸ªé˜Ÿåˆ—ä»¥intæˆ–stringå¼€å§‹ï¼Œä»¥quitç»“æŸï¼›æ‰€æœ‰
+å‘½ä»¤å‡å°å†™ã€‚
 
-Êä³öÃèÊö
+è¾“å‡ºæè¿°
 
-Ã¿¸öÏòÁ¿´Ó½¨Á¢µ½½áÊøÊä³öÕ¼Ò»ÐÐ£»
-¸÷Êä³ö¶ÔÏóÇ°º¬Ò»¸ö¿Õ¸ñ¡£
+æ¯ä¸ªå‘é‡ä»Žå»ºç«‹åˆ°ç»“æŸè¾“å‡ºå ä¸€è¡Œï¼›
+å„è¾“å‡ºå¯¹è±¡å‰å«ä¸€ä¸ªç©ºæ ¼ã€‚
 
-ÊäÈëÑùÀý
+è¾“å…¥æ ·ä¾‹
 
 int 10  push 100 push 200 push 50 push 300 put 0 5  put 1 20  push 400 fetch 1
 fetch 12 fetch -1 fetch 20 fetch 11 quit
 string 10 push hello push some push apple push box put 1 zhang   push hdu fetch
 1 fetch 20 fetch 12 quit
 
-Êä³öÑùÀý
+è¾“å‡ºæ ·ä¾‹
 
 20 50 invalid index:-1 invalid index:20 200
   zhang invalid index:20 apple
